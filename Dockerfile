@@ -30,7 +30,7 @@ WORKDIR /opt
 ADD src/eviently-prometheus-exporter.py .
 
 # Create non-root user
-RUN RUN useradd -m -u 1000 exporter && \
+RUN useradd -m -u 1000 exporter && \
     chmod +x eviently-prometheus-exporter.py && \
     chown -R exporter:exporter /opt
 
