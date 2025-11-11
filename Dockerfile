@@ -23,7 +23,7 @@ FROM python:3.11-slim-bullseye AS runtime
 ENV PATH="/opt/exporter-venv/bin:$PATH" \
     JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
     PATH=$JAVA_HOME/bin:$PATH
-    
+
 # Copy virtual environment from builder
 COPY --from=builder /opt/exporter-venv /opt/exporter-venv
 
@@ -38,4 +38,4 @@ RUN useradd -m -u 1000 exporter && \
 
 USER exporter
 
-CMD [ "python3", "-m", "eviently-prometheus-exporter.py" ]
+CMD [ "python3", "eviently-prometheus-exporter.py" ]

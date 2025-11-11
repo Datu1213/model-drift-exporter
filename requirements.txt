@@ -1,4 +1,4 @@
 great_expectations==1.8.1
 evidently==0.7.15
-pyspark==3.5.7
+pyspark[sql]==3.5.7
 prometheus-client==0.21.0
