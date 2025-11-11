@@ -20,7 +20,8 @@ RUN apt-get update && \
 # Environment variables
 ENV PATH="/opt/exporter-venv/bin:$PATH" \
     JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
-    PATH=$JAVA_HOME/bin:$PATH
+    PATH=$JAVA_HOME/bin:$PATH \
+    SPARK_CONF_DIR=/opt/spark/conf
 
 # Copy virtual environment from builder
 COPY --from=builder /opt/exporter-venv /opt/exporter-venv
@@ -28,7 +29,7 @@ COPY --from=builder /opt/exporter-venv /opt/exporter-venv
 WORKDIR /opt
 
 ADD src/eviently-prometheus-exporter.py .
-
+ADD conf/spark-defaults.conf spark/conf
 # Create non-root user
 RUN useradd -m -u 1000 exporter && \
     chmod +x eviently-prometheus-exporter.py && \
