@@ -13,8 +13,7 @@ COPY requirements.txt /tmp/requirements.txt
 # 安装 pip/uv
 RUN python -m pip install --upgrade pip setuptools wheel uv && \
     uv venv /opt/exporter-venv && \
-    . /opt/exporter-venv/bin/activate && \
-    uv pip install --no-cache-dir -vvv -r /tmp/requirements.txt
+    uv pip install --no-cache-dir --python /opt/exporter-venv/bin/python -vvv -r /tmp/requirements.txt
 
 # ---------- Runtime Stage ----------
 FROM python:3.11-slim-bullseye AS runtime
@@ -26,6 +25,7 @@ ENV PATH="/opt/exporter-venv/bin:$PATH" \
 
 # Copy virtual environment from builder
 COPY --from=builder /opt/exporter-venv /opt/exporter-venv
+COPY --from=builder /usr/lib/jvm/java-17-openjdk-amd64 /usr/lib/jvm/java-17-openjdk-amd64
 
 WORKDIR /opt
 
@@ -38,4 +38,4 @@ RUN useradd -m -u 1000 exporter && \
 
 USER exporter
 
-CMD [ "python3", "eviently-prometheus-exporter.py" ]
+CMD [ "/opt/exporter-venv/bin/python", "eviently-prometheus-exporter.py" ]
