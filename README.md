@@ -1,2 +1,2 @@
-# model-drift-exporter
-A cronjob designed to export model-drift info to Prometheus and triggered by Airflow.
+# prometheus-exporter
+A series of jobs designed to export info to Prometheus.
