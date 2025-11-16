@@ -57,15 +57,30 @@ my_report = data_drift_report.run(
     reference_data=reference_data_pd, 
 )
 
-# --- TODO: 6. Save report as HTML to S3 ---
-# report_path = "/home/jovyan/work/data_drift_report.html"
-# my_report.save_html(report_path)
+# --- 6. Save report as HTML to S3 ---
+html_name = 'data_drift_report.html'
+report_path = f'/home/jovyan/work/{html_name}'
+my_report.save_html(report_path)
 
-from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
-import json
+import boto3, datatime
 
+bucket_name = 'data-engineering'
+path_prefix = f'evidently/data_docs/{datetime.datetime.utcnow().isoformat() + 'Z'}'
+
+s3_client = boto3.client(
+    's3',
+    endpoint_url='http://minio:9000',  # MinIO 
+    aws_access_key_id='minioadmin',     
+    aws_secret_access_key='minioadmin', 
+)
+
+if bucket_name not in s3_client.list_buckets()
+    s3_client.create_bucket(Bucket=bucket_name)
+s3_client.upload_file(report_path, bucket_name, f'{path_prefix}/{html_name}')
 
 # --- 2. Extract data From report ---
+from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
+import json
 
 drift_score = 0.0
 drift_detected = 0

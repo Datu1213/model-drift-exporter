@@ -178,8 +178,12 @@ print("\nStep 9 & 10: Configuring Data Docs Site and Actions...")
 site_name = "my_data_docs_site"
 base_directory = "uncommitted/validations/" # Relative to project_root_dir
 
-bucket = data-engineering
-prefix = gx/data_docs
+bucket = "data-engineering"
+prefix = "gx/data_docs"
+aws_access_key_id = "minioadmin"
+aws_secret_access_key = "minioadmin"
+minio_endpoint_url = "http://minio:9000"
+
 
 try:
     # Define Site configuration (if needed)
@@ -189,11 +193,12 @@ try:
         "site_index_builder": {"class_name": "DefaultSiteIndexBuilder"},
         "store_backend": {
             "class_name": "TupleS3StoreBackend",   # Do not change it
-            "bucket": "data-engineering",
-            "prefix": "gx/data_docs",              # Storage Path Prefix
-            "aws_access_key_id": "minioadmin",
-            "aws_secret_access_key": "minioadmin",
-            "endpoint_url": "http://minio:9000",  # MinIO 地址
+            "bucket": bucket,
+            "prefix": prefix,              # Storage Path Prefix
+            "aws_access_key_id": aws_access_key_id,
+            "aws_secret_access_key":aws_secret_access_key,
+            "endpoint_url": minio_endpoint_url,  # MinIO URL
+        }
     }
     # context.add_data_docs_site(site_name=site_name, site_config=site_config) # Use on first run
     context.update_data_docs_site(site_name=site_name, site_config=site_config) # Use on subsequent runs
