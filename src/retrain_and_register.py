@@ -71,6 +71,7 @@ def setup_spark_session() -> SparkSession:
             .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
             .enableHiveSupport() \
             .getOrCreate()
+            
         spark._jsc.hadoopConfiguration().set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         spark._jsc.hadoopConfiguration().set("fs.s3a.endpoint", "http://minio:9000")
         spark._jsc.hadoopConfiguration().set("fs.s3a.access.key", "minioadmin")

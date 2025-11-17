@@ -2,6 +2,6 @@ great_expectations==1.8.1
 evidently==0.7.15
 pyspark[sql]==3.5.7
 prometheus-client==0.21.0
-ray==2.49.2
+ray[client]==2.49.2
 mlflow==3.6.0
 boto3
